@@ -35,8 +35,14 @@ class ContactService(
         return contact.toResponse()
     }
 
-    fun getAllContacts(): List<Contact> {
-        return contactRepository.findAll()
+    fun getAllContacts(): List<ContactResponseDto> {
+        return contactRepository.findAll().map { contact -> ContactResponseDto(
+            contact.id,
+            contact.name,
+            contact.email,
+            contact.phone,
+            contact.registerDate
+        ) }
     }
 
     /*
