@@ -12,11 +12,16 @@ class ContactService(
 ) {
     // Regex contendo o padrão para telefone
     private val phoneRegex = Regex("""^\(?\d{2}\)?\s?\d{4,5}-\d{4}$""")
+    private val emailRegex = Regex("""^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$""")
 
     fun registerContact(request: ContactRequestDto): ContactResponseDto {
         // Validando o telefone antes de salvar
         require(phoneRegex.matches(request.phone)) {
             "Telefone inválido: '${request.phone}'. Use o formato (14) 12345-6789"
+        }
+
+        require(emailRegex.matches(request.email)) {
+            "Email inválido: '${request.email}'. Use o formato meuemail@dominio.com"
         }
 
         val contact = Contact(
